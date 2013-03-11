@@ -83,5 +83,5 @@ of how rails engine's work.
 
 = License
 
-This project is release under the MIT License. Have fun, and be excellent to each other.
+This project is released under the MIT License. Have fun, and be excellent to each other.
 
