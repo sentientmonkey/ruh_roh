@@ -9,7 +9,7 @@ without having to re-create them on the fly (which could result in further error
 be generated via capistrano during deploy, or generated during a post-commit hook similar to asset
 pipeline resources.
 
-# Usage
+= Usage
 
 In your Gemfile, add RuhRoh.
 
@@ -53,7 +53,7 @@ block.
     end
   end
 
-# Deployment
+= Deployment
 
 For deployment, you can add this to your capistrano config:
 
@@ -71,7 +71,7 @@ This should be very similar to your precompile_assets task. If you can't write t
 server, you can consider make the rake task a git post-commit hook or just checking in the html files
 by hand.
 
-# Misc hacks/notes/etc
+= Misc hacks/notes/etc
 
 You'll want to sent an application host if you have and urls in your pages. This is a side effect
 on how pages are rendered via the integration runner - otherwise you'll end up with "example.com"
@@ -81,7 +81,7 @@ Also, if your layout or views use any routes for your application, you'll have t
 "main_app". For example, "root_url" becomes "main_app.root_url". This is a bit of a side effect
 of how rails engine's work.
 
-# License
+= License
 
 This project is release under the MIT License. Have fun, and be excellent to each other.
 
