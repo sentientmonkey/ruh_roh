@@ -1,3 +1,87 @@
 = RuhRoh
 
-This project rocks and uses MIT-LICENSE.
+RuhRoh is a rails plugin that allows you pre-generate error pages with the full rails stack available.
+
+While rails' default error pages are great, they look totally unprofessional for any real site.
+RuRuh provides a quick and easy way to have nicely render error pages generated from your stack
+during deployment. This allows you to re-use your existing layouts and customize your error pages
+without having to re-create them on the fly (which could result in further errors). The pages can
+be generated via capistrano during deploy, or generated during a post-commit hook similar to asset
+pipeline resources.
+
+# Usage
+
+In your Gemfile, add RuhRoh.
+
+  gem 'ruh_roh'
+
+In your routes file, mount the engine on the /error path.
+
+  YourApp::Application.routes.draw do
+    mount RuhRoh::Engine => "/error"
+  end
+
+Now you can render out some error pages!
+
+  rake ruh_roh:generate
+
+There are default 404, 422 & 500 templates available by default - it will also use your application
+layout.
+
+To override the existing templates, just make a new view to override the default.
+
+in app/views/ruh_roh/errors/404.html.erb
+
+  <h1>Oh noes! Dis page not foundses.</h1>
+
+# Configuration
+
+There are a few config options. Make sure these are set in your config, but in an after_initialize
+block.
+
+  module YourApp
+    class Application < Rails::Application
+
+        config.after_initialize do
+          # Set error layout
+          config.ruh_roh.application_layout = "error"
+          # Set error hostname
+          config.ruh_roh.application_host = "scoobysnacks.com"
+          # Set handled errors
+          config.ruh_roh.handled_errors = %(404 418 500)
+        end
+    end
+  end
+
+# Deployment
+
+For deployment, you can add this to your capistrano config:
+
+    namespace :deploy do
+     desc "Generate error pages for production"
+     task :generate_error_pages do
+       run <<-EOF
+         cd #{release_path} && RAILS_ENV='production' bundle exec rake ruh_roh:generate
+       EOF
+     end
+        end
+    after "deploy:update", "deploy:generate_error_pages"
+
+This should be very similar to your precompile_assets task. If you can't write to public on your production 
+server, you can consider make the rake task a git post-commit hook or just checking in the html files
+by hand.
+
+# Misc hacks/notes/etc
+
+You'll want to sent an application host if you have and urls in your pages. This is a side effect
+on how pages are rendered via the integration runner - otherwise you'll end up with "example.com"
+for all of your urls.
+
+Also, if your layout or views use any routes for your application, you'll have to prepend them with
+"main_app". For example, "root_url" becomes "main_app.root_url". This is a bit of a side effect
+of how rails engine's work.
+
+# License
+
+This project is release under the MIT License. Have fun, and be excellent to each other.
+
