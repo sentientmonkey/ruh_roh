@@ -5,7 +5,7 @@ module RuhRoh
 
     describe "GET 'error/404'" do
       it "returns http success" do
-        pending "not sure why these don't route"
+        skip "not sure why these don't route"
         get 'error/404'
         response.should be_success
       end
@@ -13,7 +13,7 @@ module RuhRoh
 
    describe "GET 'error/500'" do
       it "returns http success" do
-        pending "not sure why these don't route"
+        skip "not sure why these don't route"
         get 'error/500'
         response.should be_success
       end
@@ -21,7 +21,7 @@ module RuhRoh
 
    describe "GET 'error/422'" do
       it "returns http success" do
-        pending "not sure why these don't route"
+        skip "not sure why these don't route"
         get 'error/422'
         response.should be_success
       end

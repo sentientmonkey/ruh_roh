@@ -1,3 +1,3 @@
 RuhRoh::Engine.routes.draw do
-  match ":id", :to=>"errors#error"
+  get ":id", :to=>"errors#error"
 end

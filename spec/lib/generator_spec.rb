@@ -5,6 +5,7 @@ describe RuhRoh::Generator do
   let(:not_found_io){ StringIO.new }
   let(:not_authorized_io){ StringIO.new }
   let(:internal_error_io){ StringIO.new }
+  let(:assets){ StringIO.new }
 
   before(:each) do
     File.stub(:open).with("public/404.html", "w").and_yield(not_found_io)
